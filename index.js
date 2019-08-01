@@ -31,6 +31,9 @@ const resolvers = {
       photos.push(newPhoto);
       return newPhoto;
     }
+  },
+  Photo: {
+    url: parent => `http://yousete.com/img/${parent.id}.jpg`
   }
 };
 
