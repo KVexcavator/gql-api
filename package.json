@@ -22,6 +22,7 @@
     "apollo-server-express": "^2.8.1",
     "express": "^4.17.1",
     "graphql": "^14.4.2",
+    "graphql-playground-middleware-express": "^1.7.12",
     "nodemon": "^1.19.1"
   }
 }

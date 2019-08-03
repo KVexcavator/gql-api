@@ -1,6 +1,11 @@
-const { ApolloServer } = require("apollo-server-express");
+const {
+  ApolloServer
+} = require("apollo-server-express");
 const express = require("express");
-const { GraphQLScalarType } = require("graphql");
+const expressPlayground = require('graphql-playground-middleware-express').default;
+const {
+  GraphQLScalarType
+} = require("graphql");
 
 const typeDefs = `
   scalar DateTime
@@ -42,8 +47,7 @@ const typeDefs = `
   }
 `;
 var _id = 0;
-var users = [
-  {
+var users = [{
     githubLogin: "IvanDurov",
     name: "Izya Groisman"
   },
@@ -56,8 +60,7 @@ var users = [
     name: "Alex Ogurcov"
   }
 ];
-var photos = [
-  {
+var photos = [{
     id: "1",
     name: "First",
     description: "Lorem upsum something",
@@ -81,11 +84,22 @@ var photos = [
     created: "2-05-2019"
   }
 ];
-var tags = [
-  { photoID: "1", userID: "MrTwister" },
-  { photoID: "2", userID: "MamkeyMan" },
-  { photoID: "2", userID: "IvanDurov" },
-  { photoID: "2", userID: "MrTwister" }
+var tags = [{
+    photoID: "1",
+    userID: "MrTwister"
+  },
+  {
+    photoID: "2",
+    userID: "MamkeyMan"
+  },
+  {
+    photoID: "2",
+    userID: "IvanDurov"
+  },
+  {
+    photoID: "2",
+    userID: "MrTwister"
+  }
 ];
 const resolvers = {
   Query: {
@@ -110,9 +124,9 @@ const resolvers = {
     },
     taggedUsers: parent =>
       tags
-        .filter(tag => tag.photoID === parent.id)
-        .map(tag => tag.userID)
-        .map(userID => users.find(u => u.githubLogin === userID))
+      .filter(tag => tag.photoID === parent.id)
+      .map(tag => tag.userID)
+      .map(userID => users.find(u => u.githubLogin === userID))
   },
   User: {
     postedPhotos: parent => {
@@ -120,9 +134,9 @@ const resolvers = {
     },
     inPhotos: parent =>
       tags
-        .filter(tag => tag.userID === parent.id)
-        .map(tag => tag.photoID)
-        .map(photoID => photos.find(p => p.id === photoID))
+      .filter(tag => tag.userID === parent.id)
+      .map(tag => tag.photoID)
+      .map(photoID => photos.find(p => p.id === photoID))
   },
   DateTime: new GraphQLScalarType({
     name: "DateTime",
@@ -140,12 +154,20 @@ const server = new ApolloServer({
   resolvers
 });
 
-server.applyMiddleware({ app });
+server.applyMiddleware({
+  app
+});
 
 app.get("/", (req, res) => res.end("Welcome to the GraphQL API!"));
 
-app.listen({ port: 4000 }, () =>
+app.listen({
+    port: 4000
+  }, () =>
   console.log(
     `GraphQL Server running @ http://localhost:4000{server.graphqlPath}`
   )
 );
+
+app.get('/playground', expressPlayground({
+  endpoint: '/graphql'
+}));
