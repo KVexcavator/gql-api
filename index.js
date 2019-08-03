@@ -8,45 +8,7 @@ const {
   GraphQLScalarType
 } = require("graphql");
 
-const typeDefs = `
-  scalar DateTime
-  type User {
-    githubLogin: ID!
-    name: String
-    avatar: String
-    postedPhotos: [Photo!]!
-    inPhotos: [Photo!]!
-  }
-  enum PhotoCategory {
-    SELFIE
-    PORTRAIT
-    ACTION
-    LANDSCAPE
-    GRAPHIC
-  }
-  type Photo {
-    id: ID!
-    url: String!
-    name: String!
-    description: String
-    category: PhotoCategory!
-    postedBy: User!
-    taggedUsers: [User!]!
-    created: DateTime
-  }
-  type Query {
-    totalPhotos: Int!
-    allPhotos: [Photo!]!
-  }
-  input PostPhotoInput {
-    name: String!
-    category: PhotoCategory = PORTRAIT
-    description: String
-  }
-  type Mutation {
-    postPhoto(input: PostPhotoInput): Photo!
-  }
-`;
+
 var _id = 0;
 var users = [{
     githubLogin: "IvanDurov",
