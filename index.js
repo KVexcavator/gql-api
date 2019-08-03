@@ -4,7 +4,11 @@ const {
 const express = require("express");
 // npm install graphql-playground-middleware-express
 const expressPlayground = require('graphql-playground-middleware-express').default;
-
+const {
+  readFileSync
+} = require('fs');
+const typeDefs = readFileSync('./typeDefs.graphql', 'UTF-8');
+const resolvers = require('./resolvers');
 
 
 var _id = 0;
@@ -75,6 +79,9 @@ server.applyMiddleware({
 });
 
 app.get("/", (req, res) => res.end("Welcome to the GraphQL API!"));
+app.get('/playground', expressPlayground({
+  endpoint: '/graphql'
+}));
 
 app.listen({
     port: 4000
@@ -83,7 +90,3 @@ app.listen({
     `GraphQL Server running @ http://localhost:4000{server.graphqlPath}`
   )
 );
-
-app.get('/playground', expressPlayground({
-  endpoint: '/graphql'
-}));
