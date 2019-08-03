@@ -1,4 +1,5 @@
-const { ApolloServer } = require("apollo-server");
+const { ApolloServer } = require("apollo-server-express");
+const express = require("express");
 const { GraphQLScalarType } = require("graphql");
 
 const typeDefs = `
@@ -132,11 +133,19 @@ const resolvers = {
   })
 };
 
+var app = express();
+
 const server = new ApolloServer({
   typeDefs,
   resolvers
 });
 
-server
-  .listen()
-  .then(({ url }) => console.log(`GraphQL servise running on ${url}`));
+server.applyMiddleware({ app });
+
+app.get("/", (req, res) => res.end("Welcome to the GraphQL API!"));
+
+app.listen({ port: 4000 }, () =>
+  console.log(
+    `GraphQL Server running @ http://localhost:4000{server.graphqlPath}`
+  )
+);
