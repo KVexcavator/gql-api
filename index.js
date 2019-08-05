@@ -78,7 +78,7 @@ const requestGithubUserAccount = token =>
   .then(toJSON)
   .catch(throwError);
 
-async function authorizeWithGithub(credentials) {
+const authorizeWithGithub = async credentials => {
   const {
     access_token
   } = await requestGithubToken(credentials);
@@ -87,4 +87,4 @@ async function authorizeWithGithub(credentials) {
     ...githubUser,
     access_token
   };
-}
+};
