@@ -1,3 +1,7 @@
+const {
+  authorizeWithGithub
+} = require('../lib')
+
 module.exports = {
   async postPhoto(parent, args) {
     var newPhoto = {

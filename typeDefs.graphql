@@ -36,7 +36,7 @@ scalar DateTime
   }
   type AuthPayload {
     token: String!
-    user: String!
+    user: User!
   }
   type Mutation {
     postPhoto(input: PostPhotoInput): Photo!
